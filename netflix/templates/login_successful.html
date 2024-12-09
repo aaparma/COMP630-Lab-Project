@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Back - Netflix</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #141414;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: rgba(0,0,0,0.75);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            max-width: 600px;
+            width: 90%;
+        }
+        .logo {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .welcome-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .continue-btn {
+            background-color: #E50914;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .continue-btn:hover {
+            background-color: #F6121D;
+        }
+        .user-email {
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" class="logo">
+        
+        <div class="welcome-message">
+            <!-- Greeting Message will be dynamically updated by JS -->
+            Login Successful!
+        </div>
+        
+        <div class="user-info">
+            <p>Welcome back to Netflix, <span id="userEmail" class="user-email"></span></p>
+            <p>Your account is now active</p>
+        </div>
+        
+        <button class="continue-btn" onclick="window.location.href='browse.html'">
+            Continue to Browse
+        </button>
+    </div>
+
+    <script>
+        // Function to get URL parameters (to fetch the email)
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Set user email dynamically when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const email = getUrlParameter('email');
+            const emailElement = document.getElementById('userEmail');
+            
+            // Set email if available, or show 'User' as default
+            if (email) {
+                emailElement.textContent = email;
+            } else {
+                emailElement.textContent = 'User';
+            }
+
+            // Time-based greeting (Good Morning, Afternoon, or Evening)
+            const welcomeMessage = document.querySelector('.welcome-message');
+            const hour = new Date().getHours();
+            
+            if (hour < 12) {
+                welcomeMessage.textContent = "Good Morning! Welcome back to Netflix";
+            } else if (hour < 18) {
+                welcomeMessage.textContent = "Good Afternoon! Welcome back to Netflix";
+            } else {
+                welcomeMessage.textContent = "Good Evening! Welcome back to Netflix";
+            }
+        });
+    </script>
+</body>
+</html>
